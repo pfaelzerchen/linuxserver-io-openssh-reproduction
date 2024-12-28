@@ -1,1 +1,15 @@
-{}
+{
+    "kubernetes": {
+        "fileMatch": ["\\.yaml$"]
+    },
+    "prConcurrentLimit": 0,
+
+    "packageRules": [
+        {
+          "description": "Detect openssh-server image updates",
+          "matchDatasources": ["docker"],
+          "matchPackageNames": ["lscr.io/linuxserver/openssh-server"],
+          "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)_p(?<patch>\\d+)-r(?<build>\\d)-ls(?<revision>.+)$"
+        }
+      ]
+}
