@@ -4,11 +4,11 @@ First, read the [Renovate minimal reproduction instructions](https://github.com/
 
 ## Current behavior
 
-Explain the current behavior here.
+Renovate will create a PR for updating the image version in `compose.yml`, but not for `openssh-deployment.yaml`.
 
 ## Expected behavior
 
-Renovate should create a PR for updating the image version.
+Renovate should create a PR for updating the image version in both files.
 
 ## Link to the Renovate issue or Discussion
 
