@@ -1,5 +1,5 @@
 {
-    "docker-compose": {
+    "kubernetes": {
         "fileMatch": ["\\.yaml$"]
     },
     "prConcurrentLimit": 0,
