@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: openssh-backup
+  name: openssh-backup
+  namespace: backup-files
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openssh-backup
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: openssh-backup
+    spec:
+      containers:
+        - env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: Europe/Berlin
+            - name: SUDO_ACCESS
+              value: "false"
+            - name: PASSWORD_ACCESS
+              value: "false"
+            - name: USER_NAME
+              value: netbackup
+            - name: LOG_STDOUT
+              value: "true"
+          image: lscr.io/linuxserver/openssh-server:9.7_p1-r4-ls181
+          name: openssh-server
+          ports:
+            - containerPort: 2222
+          volumeMounts:
+            - mountPath: /config
+              name: config
+              readOnly: false
+            - mountPath: /data/backup
+              name: backup
+              readOnly: false
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "apk add rsync"]
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+      restartPolicy: Always
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: openssh-config
+        - name: backup
+          persistentVolumeClaim:
+            claimName: linux
