@@ -9,6 +9,7 @@
           "description": "Detect openssh-server image updates",
           "matchDatasources": ["docker"],
           "matchPackageNames": ["lscr.io/linuxserver/openssh-server"],
+          "matchFileNames": ["openssh-deployment.yaml"],
           "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)_p(?<patch>\\d+)-r(?<build>\\d)-ls(?<revision>.+)$"
         }
       ]
